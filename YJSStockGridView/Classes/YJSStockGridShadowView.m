@@ -13,9 +13,6 @@
 /// 左侧渐变图层
 @property (nonatomic, strong) UIView *leftSideFadeView;
 
-/// 右侧指示图
-@property (nonatomic, strong) UIImageView *scrollTagView;
-
 @end
 
 @implementation YJSStockGridShadowView
@@ -37,12 +34,6 @@
     __weak typeof(self) weakSelf = self;
     self.gridViewDidScrollBlock = ^(YJSStockGridView * _Nonnull gridView) {
         weakSelf.leftSideFadeView.hidden = (gridView.contentOffset.x <= 0.0f);
-        if (gridView.contentSize.width > weakSelf.frame.size.width) {
-            CGFloat offsetWidth = gridView.contentOffset.x + gridView.frame.size.width;
-            weakSelf.scrollTagView.hidden = (offsetWidth >= gridView.contentSize.width);
-        } else {
-            weakSelf.scrollTagView.hidden = YES;
-        }
     };
 }
 
@@ -58,28 +49,7 @@
             leftOffset = [self.dataSource gridView:self widthForColumn:0];
         }
         [self addSubview:self.leftSideFadeView];
-        [self.leftSideFadeView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(leftOffset);
-            make.width.equalTo(@(10.0f));
-            make.top.bottom.equalTo(self);
-        }];
-    }
-    
-    if (!self.scrollTagView.superview) {
-                
-        CGFloat headHeight = 0.0f;
-        if (self.dataSource && [self.dataSource respondsToSelector:@selector(gridViewHeightForHeader:)]) {
-            headHeight = [self.dataSource gridViewHeightForHeader:self];
-        }
-        
-        CGFloat top = (headHeight - 18.0f) / 2.0f;
-        [self addSubview:self.scrollTagView];
-        [self.scrollTagView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self);
-            make.top.equalTo(@(top));
-            make.width.equalTo(@(20.0f));
-            make.height.equalTo(@(18.0f));
-        }];
+        self.leftSideFadeView.frame = CGRectMake(leftOffset, 0, 10, self.frame.size.height);
     }
 }
 
@@ -125,14 +95,6 @@
     }
     return _leftSideFadeView;
 }
-
-- (UIImageView *)scrollTagView{
-    if (!_scrollTagView) {
-        _scrollTagView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
-    }
-    return _scrollTagView;
-}
-
 
 @end
 
