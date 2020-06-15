@@ -1,0 +1,6 @@
+framework module Pods_YJSStockGridView_Example {
+  umbrella header "Pods-YJSStockGridView_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

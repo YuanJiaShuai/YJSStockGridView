@@ -1,0 +1,6 @@
+framework module YJSStockGridView {
+  umbrella header "YJSStockGridView-umbrella.h"
+
+  export *
+  module * { export * }
+}
