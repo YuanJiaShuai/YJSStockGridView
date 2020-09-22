@@ -51,8 +51,8 @@
 #pragma mark - Private Methods
 - (void)setupSubviews{
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self addSubview:self.leftCollectionView];
-    [self addSubview:self.rightCollectionView];
+    [self.contentView addSubview:self.leftCollectionView];
+    [self.contentView addSubview:self.rightCollectionView];
 }
 
 - (void)setupConstraints{
